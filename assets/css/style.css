@@ -270,7 +270,28 @@ button,input,select{font:inherit;color:inherit}
   text-shadow:0 0 26px rgba(245,194,76,.6),0 2px 0 rgba(0,0,0,.4);
   transform:rotate(-3deg);
 }
-[data-flicker]{animation:flicker 7s infinite}
+/* The sign warms up on load, then settles into the slow ambient flicker.
+   Both start visible — a hero parked at opacity 0 is one failed animation
+   away from a blank page. */
+.hero-title .neon{animation:strikeUp 1.25s steps(1,end) both}
+.hero-title .neon-2{animation-delay:.42s}
+.hero-title .script{animation:scriptUp 1s .85s cubic-bezier(.2,.9,.3,1.4) both}
+@keyframes strikeUp{
+  0%{opacity:.14;filter:saturate(.15) brightness(.55)}
+  18%{opacity:.9;filter:none}
+  26%{opacity:.2;filter:saturate(.2) brightness(.6)}
+  38%{opacity:1;filter:none}
+  46%{opacity:.35;filter:saturate(.3) brightness(.7)}
+  58%{opacity:1;filter:none}
+  66%{opacity:.6}
+  100%{opacity:1;filter:none}
+}
+@keyframes scriptUp{
+  from{opacity:0;transform:rotate(-3deg) scale(.9)}
+  to{opacity:1;transform:rotate(-3deg) scale(1)}
+}
+/* the ambient flicker takes over once the warm-up is done */
+[data-flicker]{animation:strikeUp 1.25s steps(1,end) both,flicker 7s 1.6s infinite}
 @keyframes flicker{
   0%,96%,100%{opacity:1}
   96.5%{opacity:.35}97%{opacity:1}97.6%{opacity:.5}98.2%{opacity:1}
@@ -483,6 +504,10 @@ button,input,select{font:inherit;color:inherit}
 .status:empty{display:none}
 .status b{color:var(--gold);font-weight:600}
 .status code{background:rgba(247,239,226,.1);padding:.1em .4em;border-radius:4px;font-size:.86em}
+.status .elapsed{
+  font-family:var(--cond);letter-spacing:.12em;font-size:.85em;
+  color:var(--smoke-2);font-variant-numeric:tabular-nums;
+}
 .status.err{color:#ffc9ae}
 .status.err::before{content:"⚠ ";color:var(--flame)}
 .status.busy::before{
@@ -744,6 +769,23 @@ button,input,select{font:inherit;color:inherit}
   margin-inline:auto;
 }
 .lb-actions{position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem}
+.lb-nav{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:5;
+  width:56px;height:56px;border-radius:50%;cursor:pointer;
+  background:rgba(247,239,226,.08);border:1px solid var(--line);color:var(--cream);
+  font-size:2rem;line-height:1;padding:0 0 .15em;
+  transition:background .2s,border-color .2s,transform .2s,opacity .2s;
+}
+.lb-nav:hover{background:rgba(255,46,136,.25);border-color:var(--hot)}
+.lb-prev{left:1.2rem}
+.lb-next{right:1.2rem}
+.lb-prev:hover{transform:translateY(-50%) translateX(-3px)}
+.lb-next:hover{transform:translateY(-50%) translateX(3px)}
+.lb-nav[hidden]{display:none}
+@media (max-width:640px){
+  .lb-nav{width:46px;height:46px;font-size:1.6rem;bottom:auto}
+  .lb-prev{left:.4rem}.lb-next{right:.4rem}
+}
 
 /* key modal */
 .key-box{

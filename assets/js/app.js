@@ -294,6 +294,44 @@
     return { done: function () { if (el.className.indexOf('busy') > -1) el.className = 'status'; } };
   }
 
+  /* A Pro frame takes a minute or more. One frozen line for that long reads as
+     a broken page, so the operator keeps talking and the clock keeps running —
+     the wait becomes film developing rather than nothing happening. */
+  function developing(slotLabel) {
+    var el = $('#status');
+    var start = Date.now();
+    var line = T.PATTER[(Math.random() * T.PATTER.length) | 0];
+    var timer;
+
+    function paint() {
+      var secs = Math.round((Date.now() - start) / 1000);
+      el.className = 'status busy';
+      el.innerHTML = line + ' Developing frame <b>' + slotLabel + '</b>… ' +
+                     '<span class="elapsed">' + secs + 's</span>';
+    }
+    paint();
+    timer = setInterval(function () {
+      var secs = Math.round((Date.now() - start) / 1000);
+      // fresh patter every 8s, so it never looks stuck
+      if (secs > 0 && secs % 8 === 0) {
+        var next = line;
+        while (next === line && T.PATTER.length > 1) {
+          next = T.PATTER[(Math.random() * T.PATTER.length) | 0];
+        }
+        line = next;
+      }
+      if (secs === 45) line = 'Pro takes its time. Worth it.';
+      paint();
+    }, 1000);
+
+    return {
+      done: function () {
+        clearInterval(timer);
+        if (el.className.indexOf('busy') > -1) el.className = 'status';
+      }
+    };
+  }
+
   function initStyles() {
     $$('#styles button').forEach(function (b) {
       b.classList.toggle('on', b.dataset.style === style);
@@ -463,8 +501,7 @@
     var job = queue.shift();
     updateQueueInfo();
 
-    var tick = pending(T.PATTER[(Math.random() * T.PATTER.length) | 0] +
-                    ' Developing frame <b>' + String(job.slot + 1).padStart(2, '0') + '</b>…');
+    var tick = developing(String(job.slot + 1).padStart(2, '0'));
     var full = T.buildPrompt(job.prompt, job.style, crew);
 
     window.NANO.generate(full, crew, job.prompt)
@@ -571,14 +608,57 @@
      ========================================================= */
   var lbIndex = null;
 
+  function filledIndexes() {
+    var out = [];
+    for (var i = 0; i < C.SLOTS; i++) if (roll[i]) out.push(i);
+    return out;
+  }
+
   function openLightbox(i) {
     lbIndex = i;
     $('#lightboxImg').src = roll[i].url;
     $('#lightboxCap').textContent = roll[i].prompt;
+    var many = filledIndexes().length > 1;
+    $('#lbPrev').hidden = !many;
+    $('#lbNext').hidden = !many;
     openOverlay('lightbox');
   }
 
+  /* Step to the next filled frame, wrapping round. Cleared slots are skipped,
+     so the arrows never land on an empty frame. */
+  function stepLightbox(dir) {
+    var list = filledIndexes();
+    if (list.length < 2) return;
+    var at = list.indexOf(lbIndex);
+    if (at === -1) at = 0;
+    openLightbox(list[(at + dir + list.length) % list.length]);
+  }
+
   function initLightbox() {
+    $('#lbPrev').onclick = function () { stepLightbox(-1); };
+    $('#lbNext').onclick = function () { stepLightbox(1); };
+
+    addEventListener('keydown', function (e) {
+      if (document.getElementById('lightbox').hidden) return;
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+      else if (e.key === 'ArrowRight') stepLightbox(1);
+    });
+
+    // swipe, which is how anyone on a phone will expect to move
+    var x0 = null, y0 = null;
+    var lb = document.getElementById('lightbox');
+    lb.addEventListener('touchstart', function (e) {
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+    }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      var dy = e.changedTouches[0].clientY - y0;
+      // horizontal intent only, so scrolling the caption doesn't flip frames
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) stepLightbox(dx < 0 ? 1 : -1);
+      x0 = y0 = null;
+    }, { passive: true });
+
     $('#lbDownload').onclick = function () {
       if (lbIndex === null || !roll[lbIndex]) return;
       toBlob(roll[lbIndex].url).then(function (b) {

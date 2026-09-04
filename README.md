@@ -87,6 +87,12 @@ The four **look** buttons (70s Film, Disco Inferno, Movie Poster, Polaroid) chan
 
 - **Print / PDF** — a proper contact sheet. Your browser's print dialog has "Save as PDF."
 - **Share strip** — composites all five into one captioned image. On a phone this opens the native share sheet; on a desktop it downloads.
+- Click any frame to enlarge, then **arrow keys or swipe** to move between them.
+  Cleared slots are skipped, so the arrows never land on an empty frame.
+
+Generation on the Pro model takes a minute or more per frame. The status line
+runs a clock and the operator keeps talking so a long wait reads as film
+developing rather than a page that has hung.
 
 ---
 
@@ -148,6 +154,7 @@ index.html               the whole page
 assets/css/style.css     all the styling, including the print stylesheet
 assets/css/fonts.css     self-hosted @font-face rules
 assets/fonts/            the font files (see NOTICE)
+assets/img/              disco ball, tab icons, and the link-preview card
 assets/crew/             the four reference face crops, loaded automatically
 assets/roll/             five frames shot ahead of time (not loaded — kept for printing)
 assets/js/config.js      ← passwords, model, slot count
@@ -161,6 +168,19 @@ api/generate.js          the same proxy, as a serverless function
 ```
 
 The two files you'll actually want to edit are marked with `←`.
+
+---
+
+## Link previews
+
+`index.html` carries Open Graph and Twitter card tags, so the link arrives in a
+text message or the group chat as a proper card rather than a bare URL. The
+image is `assets/img/share-card.jpg` (1200×630).
+
+`og:image` is a **relative** path, which every major scraper resolves against
+the page URL. If you want to be certain — some older scrapers insist on an
+absolute address — swap both `og:image` and `twitter:image` for the full
+`https://your-domain/assets/img/share-card.jpg`.
 
 ---
 
