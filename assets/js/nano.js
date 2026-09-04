@@ -18,7 +18,8 @@ window.NANO = (function () {
   var proxyChecked = false;
   var proxyOK = false;
 
-  var DEMO = /[?&]demo=1/.test(location.search);
+  // Forced on in the hosted preview, where the sandbox blocks outside API calls.
+  var DEMO = /[?&]demo=1/.test(location.search) || !!window.PA68_PREVIEW;
 
   /* ---------------------------------------------------------
      Is a server proxy sitting at /api/generate?

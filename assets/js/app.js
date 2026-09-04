@@ -484,7 +484,11 @@
       if (saved && saved.length === C.SLOTS) roll = saved;
       renderStrip();
       var n = filledCount();
-      if (window.NANO.isDemo()) {
+      if (window.PA68_PREVIEW) {
+        say('bot', '<b>Preview.</b> This hosted copy can\'t reach the image model — the page sandbox ' +
+                   'blocks outside API calls — so frames are drawn placeholders. Everything else is ' +
+                   'real: try the looks, the strip, print, share and the vault.');
+      } else if (window.NANO.isDemo()) {
         say('bot', '<b>Demo mode.</b> Images are fake, drawn right here — good for checking the layout. ' +
                    'Drop the <code>?demo=1</code> from the URL to shoot for real.');
       }
@@ -510,7 +514,7 @@
   function initLightbox() {
     $('#lbDownload').onclick = function () {
       if (lbIndex === null || !roll[lbIndex]) return;
-      download(roll[lbIndex].url, 'pa-68-frame-' + (lbIndex + 1) + '.jpg');
+      saveFile(dataUrlToBlob(roll[lbIndex].url), 'pa-68-frame-' + (lbIndex + 1) + '.jpg');
     };
     $('#lbRegen').onclick = function () {
       if (lbIndex === null || !roll[lbIndex]) return;
@@ -523,10 +527,47 @@
     };
   }
 
-  function download(url, name) {
+  /* Handing a file to the viewer.
+
+     Served as a plain web page, an <a download> is all it takes. Served
+     inside the claude.ai artifact viewer, that link is inert and the host
+     mediates saves through the `downloads` capability instead — so ask for
+     it, and fall back to the link when it isn't there. */
+  var downloadsApi = null;
+
+  function initDownloads() {
+    if (window.claude && typeof window.claude.use === 'function') {
+      window.claude.use('downloads').then(
+        function (d) { downloadsApi = d; },
+        function () {}
+      );
+    }
+  }
+
+  function dataUrlToBlob(url) {
+    var comma = url.indexOf(',');
+    var mime = (url.slice(0, comma).match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+    var bin = atob(url.slice(comma + 1));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new Blob([bytes], { type: mime });
+  }
+
+  function saveFile(blob, name) {
+    if (downloadsApi) {
+      return downloadsApi.save({ filename: name, data: blob }).then(function () {
+        say('bot', 'Saved <b>' + name + '</b>.');
+      }, function (err) {
+        if (err && err.code === 'declined') return;
+        say('err', 'Could not save that one' + (err && err.message ? ' — ' + err.message : '') + '.');
+      });
+    }
+    var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    return Promise.resolve();
   }
 
   /* =========================================================
@@ -668,8 +709,7 @@
             text: "Pa's 68th birthday roll 🕺"
           });
         }
-        download(URL.createObjectURL(blob), 'pas-68th.jpg');
-        say('bot', 'Saved the whole roll as one image — it\'s in your downloads.');
+        return saveFile(blob, 'pas-68th.jpg');
       }).catch(function (err) {
         if (err && err.name === 'AbortError') return;
         say('err', (err && err.message) || 'Could not build the strip.');
@@ -830,6 +870,7 @@
      BOOT
      ========================================================= */
   function boot() {
+    initDownloads();
     buildFloor();
     buildWindows();
     reveals();
