@@ -54,7 +54,9 @@ window.CONFIG = {
      with GEMINI_API_KEY set — the page will find /api/generate on
      its own and never ask for a key.
   ----------------------------------------------------------- */
-  MODEL: 'gemini-2.5-flash-image',   // "Nano Banana" — the cheap, known-good one
+  // Pro holds facial identity far better than flash on the same prompt —
+  // that difference is the whole ballgame for this app.
+  MODEL: 'gemini-3-pro-image',
   API_BASE: 'https://generativelanguage.googleapis.com/v1beta/models/',
   PROXY_PATH: '/api/generate',
 

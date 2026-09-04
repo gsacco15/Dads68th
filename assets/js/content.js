@@ -60,35 +60,47 @@ window.CONTENT = (function () {
     }
   };
 
-  /* Wrapped around every prompt so the two of them stay recognisable. */
+  /* Wrapped around every prompt so the two of them stay recognisable.
+     This wording is what actually worked when the roll was shot: name the
+     people explicitly, demand the real faces rather than a likeness, and
+     insist on close framing — left to itself the model composes wide
+     landscapes with both faces small and in profile, which throws the
+     likeness away entirely. */
   function buildPrompt(userPrompt, styleKey, crew) {
     var style = STYLES[styleKey] || STYLES.film;
     var lines = [];
 
     lines.push('Create a single photorealistic image — one frame, no collage, no borders, no text.');
+    lines.push('');
 
     if (crew && crew.length) {
-      lines.push('');
-      lines.push('THE TWO PEOPLE IN THIS IMAGE COME FROM THE REFERENCE PHOTOS PROVIDED:');
+      lines.push('IDENTITY — the most important requirement. The attached reference photographs');
+      lines.push('are of two real men, and the image must show THESE TWO MEN and nobody else:');
       crew.forEach(function (c, i) {
         lines.push('  • Reference ' + (i + 1) + ': ' + (c.who || 'both of them') + '.');
       });
-      lines.push('Reproduce their faces, hair, build and age faithfully and consistently. ' +
-                 'PA is the older man (he is 68). GRANT is his son. They should be instantly ' +
-                 'recognisable as the men in the reference photos.');
+      lines.push('Copy their actual facial features — face shape, nose, eyes, smile, hairline,');
+      lines.push('skin tone, the exact grey of PA\'s hair and the shape of GRANT\'s beard. Someone');
+      lines.push('who knows these two must recognise them instantly. Do NOT invent generic');
+      lines.push('handsome faces and do NOT substitute a different person. PA wears his glasses.');
+      lines.push('PA is 68; GRANT is his grown son.');
     } else {
-      lines.push('Two men: PA, a warm, sharp 68-year-old with Brooklyn in his posture, and ' +
-                 'GRANT, his grown son. They obviously like each other.');
+      lines.push('Two men: PA, a warm, sharp 68-year-old with Brooklyn in his posture, and');
+      lines.push('GRANT, his grown son. They obviously like each other.');
     }
 
+    lines.push('');
+    lines.push('FRAMING: a medium shot. Both men close to camera, BOTH FACES CLEARLY VISIBLE,');
+    lines.push('turned toward the camera, well lit and large in the frame. Not a wide landscape,');
+    lines.push('not from behind, not in profile, no small distant figures. Faces first, scenery second.');
     lines.push('');
     lines.push('SCENE: ' + userPrompt);
     lines.push('');
     lines.push('LOOK: ' + style.suffix);
     lines.push('');
-    lines.push('Both men look genuinely happy and completely at ease — the joke is the situation, ' +
-               'never the people. Flattering, affectionate, funny. Full colour. ' +
-               'No text, captions, logos or watermarks anywhere in the image.');
+    lines.push('Both men look genuinely happy and completely at ease — the joke is the situation,');
+    lines.push('never the people. Flattering, affectionate, funny. Full colour.');
+    lines.push('No text, captions, logos or watermarks anywhere in the image.');
 
     return lines.join('\n');
   }
@@ -414,6 +426,23 @@ window.CONTENT = (function () {
   ].join('\n');
 
   /* ---------------------------------------------------------
+     THE STANDING CREW.
+     Close crops of Pa and Grant, loaded automatically so every
+     generation has them as reference without anyone uploading
+     anything. These four are what produced the roll below.
+
+     Wide shots do not work here — in a full-scene photo the faces
+     are a couple of percent of the frame and the model invents
+     strangers. Crop tight on the face before adding one.
+     --------------------------------------------------------- */
+  var DEFAULT_CREW = [
+    { file: 'assets/crew/pa-1.jpg',    who: 'PA, the older man' },
+    { file: 'assets/crew/pa-2.jpg',    who: 'PA, the older man' },
+    { file: 'assets/crew/grant-1.jpg', who: 'GRANT, the younger man' },
+    { file: 'assets/crew/grant-2.jpg', who: 'GRANT, the younger man' }
+  ];
+
+  /* ---------------------------------------------------------
      THE ROLL THE PAGE OPENS WITH.
      Five frames already shot, so the page has real photographs
      in it the moment it loads — no key, no setup, nothing for
@@ -435,6 +464,7 @@ window.CONTENT = (function () {
 
   return {
     IDEAS: IDEAS,
+    DEFAULT_CREW: DEFAULT_CREW,
     PRESET_ROLL: PRESET_ROLL,
     STYLES: STYLES,
     PATTER: PATTER,

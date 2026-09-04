@@ -49,18 +49,33 @@ Two ways to wire it in:
 
 There's a **Nano Banana Pro** option (`gemini-3-pro-image-preview`) in the same panel — slower and pricier, noticeably sharper.
 
-### 2. Add reference photos ← *this is the important bit*
+### 2. Reference photos — already done
 
-Open **The Crew** and drop in **2–4 photos** of you and Dad. Without them the booth invents two strangers; with them it keeps your actual faces across all five frames.
+**The Crew** loads four reference crops of Pa and Grant automatically from
+`assets/crew/`, so every generation has them without anyone uploading anything.
+Open the panel and you'll see them tagged Pa / Pa / Grant / Grant.
 
-What works best:
+Adding your own overrides the standing set (they're saved in that browser's
+IndexedDB). What matters if you do:
 
-- Faces clearly visible, well lit, looking roughly at the camera
-- A mix: one of Dad alone, one of you alone, one of the two of you together
-- Use the little dropdown under each photo to tag it **Pa** / **Grant** / **Both** — that's what tells the model who's who
-- Head-and-shoulders beats full-body; sunglasses and hats hurt
+- **Crop tight on the face.** This is the single biggest factor. In a full-scene
+  photo the face is a couple of percent of the frame, the model has almost
+  nothing to work from, and it invents a generic stranger instead. Waist-up is
+  already too loose.
+- Two angles per person beats one.
+- Good light, no sunglasses, no hat brim shadowing the eyes.
+- Tag each with the dropdown — that's what tells the model who's who.
 
-Photos are downscaled to 1024px and stored in this browser's IndexedDB. They're never committed to the repo and never uploaded anywhere except to Google at generation time.
+### 2b. Use the Pro model for faces
+
+`gemini-3-pro-image` holds facial identity dramatically better than the flash
+models on an identical prompt. That difference is the whole ballgame here, so
+it's the default. The flash models are cheaper and fine for scenery, but they
+drift on likeness.
+
+The prompt wrapper in `content.js` also demands close framing on purpose —
+left to itself the model composes wide landscapes with both faces small and in
+profile, which throws the likeness away no matter how good the references are.
 
 ### 3. Shoot
 
@@ -126,6 +141,8 @@ index.html               the whole page
 assets/css/style.css     all the styling, including the print stylesheet
 assets/css/fonts.css     self-hosted @font-face rules
 assets/fonts/            the font files (see NOTICE)
+assets/crew/             the four reference face crops, loaded automatically
+assets/roll/             the five frames the page opens with
 assets/js/config.js      ← passwords, model, slot count
 assets/js/content.js     ← the letters, the idea prompts, the prompt template
 assets/js/app.js         UI: chat, queue, film strip, vault, print, share

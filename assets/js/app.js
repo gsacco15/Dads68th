@@ -190,13 +190,47 @@
 
     var hint = $('#crewHint');
     if (crew.length) {
-      hint.textContent = crew.length + ' reference photo' + (crew.length > 1 ? 's' : '') + ' loaded ✓';
+      hint.textContent = crew.length + ' reference photo' + (crew.length > 1 ? 's' : '') +
+                         ' loaded ✓ — Pa and Grant, ready to shoot';
       hint.classList.add('ok');
     } else {
       hint.textContent = 'Add reference photos so it actually looks like you two →';
       hint.classList.remove('ok');
     }
     $('.upload').style.display = crew.length >= C.MAX_CREW ? 'none' : 'inline-block';
+  }
+
+  /* The standing crew ships as files. Pull them in and turn each into the
+     same {mime, b64, url, who} shape an uploaded photo produces, so the
+     rest of the app can't tell the difference. Deliberately not written
+     back to IndexedDB — they reload from the page every time, and anything
+     the user adds themselves takes over completely. */
+  function loadDefaultCrew() {
+    var list = (T.DEFAULT_CREW || []).slice(0, C.MAX_CREW);
+    if (!list.length) return Promise.resolve([]);
+    return Promise.all(list.map(function (c) {
+      return toDataUrl(c.file).then(function (url) {
+        return url ? { mime: 'image/jpeg', b64: url.split(',')[1], url: url, who: c.who } : null;
+      });
+    })).then(function (out) {
+      return out.filter(Boolean);
+    }).catch(function () { return []; });
+  }
+
+  function toDataUrl(src) {
+    if (src.slice(0, 5) === 'data:') return Promise.resolve(src);
+    return fetch(src)
+      .then(function (r) { return r.ok ? r.blob() : null; })
+      .then(function (b) {
+        if (!b) return null;
+        return new Promise(function (res) {
+          var fr = new FileReader();
+          fr.onload = function () { res(fr.result); };
+          fr.onerror = function () { res(null); };
+          fr.readAsDataURL(b);
+        });
+      })
+      .catch(function () { return null; });
   }
 
   function saveCrew() {
@@ -225,8 +259,13 @@
     });
 
     window.STORE.getCrew().then(function (saved) {
-      if (saved && saved.length) { crew = saved; renderCrew(); }
-      else renderCrew();
+      if (saved && saved.length) { crew = saved; renderCrew(); return; }
+      renderCrew();
+      loadDefaultCrew().then(function (list) {
+        if (!list.length || crew.length) return;
+        crew = list;
+        renderCrew();
+      });
     });
   }
 
