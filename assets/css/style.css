@@ -137,12 +137,8 @@ button,input,select{font:inherit;color:inherit}
 }
 .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
 .brand-ball{
-  width:22px;height:22px;border-radius:50%;
-  background:
-    repeating-conic-gradient(from 0deg,rgba(255,255,255,.85) 0 12deg,rgba(120,140,180,.35) 12deg 24deg),
-    radial-gradient(circle at 32% 28%,#fff,#5b6a8a);
-  box-shadow:0 0 14px rgba(70,224,255,.55);
-  animation:spin 9s linear infinite;
+  width:24px;height:24px;border-radius:50%;
+  filter:drop-shadow(0 0 9px rgba(70,224,255,.6));
 }
 .brand-txt{font-family:var(--display);letter-spacing:.06em;font-size:1.06rem}
 .brand-txt em{color:var(--hot);font-style:normal}
@@ -213,22 +209,30 @@ button,input,select{font:inherit;color:inherit}
 @keyframes beam{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.ball-rig{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2;pointer-events:none}
-.ball-cord{width:2px;height:8vh;margin:0 auto;background:linear-gradient(#4a3a6a,#2a2140)}
-.ball{
-  width:clamp(64px,9vw,110px);aspect-ratio:1;border-radius:50%;position:relative;
-  background:
-    repeating-conic-gradient(from 0deg,rgba(255,255,255,.9) 0 9deg,rgba(150,170,210,.45) 9deg 18deg),
-    repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 2px,transparent 2px 9px),
-    radial-gradient(circle at 34% 26%,#ffffff,#6c7b9c 55%,#2b3350 100%);
-  background-color:#7d8aa8;
-  box-shadow:0 0 60px rgba(70,224,255,.45),0 0 120px rgba(255,46,136,.25),inset -14px -18px 34px rgba(0,0,0,.55);
-  animation:spin 12s linear infinite;
+/* A photograph of a sphere must not spin — rotating it reads as a wheel,
+   not a rotating ball. It hangs from the cord and swings instead, which is
+   what a real mirror ball does. */
+.ball-rig{
+  position:absolute;top:0;left:50%;z-index:2;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;
+  transform-origin:50% 0;
+  animation:sway 8s ease-in-out infinite;
 }
-.ball-shine{
-  position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.95),transparent 42%);
-  mix-blend-mode:screen;
+@keyframes sway{
+  0%,100%{transform:translateX(-50%) rotate(-1.7deg)}
+  50%{transform:translateX(-50%) rotate(1.7deg)}
+}
+.ball-cord{width:2px;height:8vh;background:linear-gradient(#4a3a6a,#2a2140)}
+.ball-rig picture{display:block;line-height:0}
+.ball{
+  width:clamp(74px,10vw,128px);height:auto;display:block;
+  animation:ballGlow 6s ease-in-out infinite;
+}
+/* drop-shadow follows the cut-out edge, so the glow hugs the sphere
+   rather than boxing it */
+@keyframes ballGlow{
+  0%,100%{filter:drop-shadow(0 0 22px rgba(70,224,255,.42)) drop-shadow(0 0 58px rgba(255,46,136,.26))}
+  50%{filter:drop-shadow(0 0 42px rgba(70,224,255,.72)) drop-shadow(0 0 96px rgba(255,46,136,.46))}
 }
 
 .hero-inner{position:relative;z-index:3;text-align:center;max-width:min(950px,94vw)}
@@ -666,9 +670,8 @@ button,input,select{font:inherit;color:inherit}
   box-shadow:0 50px 110px -50px #000,0 0 80px -40px rgba(245,194,76,.7);
 }
 .vault-ball{
-  width:54px;height:54px;margin:0 auto 1.2rem;border-radius:50%;
-  background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.85) 0 12deg,rgba(130,150,190,.4) 12deg 24deg);
-  box-shadow:0 0 30px rgba(70,224,255,.5);animation:spin 10s linear infinite;
+  width:60px;height:60px;margin:0 auto 1.2rem;display:block;
+  filter:drop-shadow(0 0 20px rgba(70,224,255,.55));
 }
 .vault-box form{display:flex;flex-direction:column;gap:.8rem;margin-top:1.4rem}
 .vault-box input{

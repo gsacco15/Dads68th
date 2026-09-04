@@ -11,7 +11,8 @@
 <link rel="preload" href="assets/fonts/monoton-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕺</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon-180.png">
 </head>
 <body>
 
@@ -23,7 +24,7 @@
 <!-- ============ top bar ============ -->
 <header class="topbar" id="topbar">
   <a class="brand" href="#top">
-    <span class="brand-ball" aria-hidden="true"></span>
+    <img class="brand-ball" src="assets/img/ball-64.png" alt="" width="64" height="64">
     <span class="brand-txt">PA <em>@</em> 68</span>
   </a>
   <nav class="nav">
@@ -42,7 +43,10 @@
 
     <div class="ball-rig" aria-hidden="true">
       <div class="ball-cord"></div>
-      <div class="ball"><span class="ball-shine"></span></div>
+      <picture>
+        <source srcset="assets/img/discoball.webp" type="image/webp">
+        <img class="ball" src="assets/img/discoball.png" alt="" width="560" height="560">
+      </picture>
     </div>
 
     <div class="hero-inner">
@@ -277,7 +281,7 @@
 <div class="overlay vault-overlay" id="vault" hidden>
   <button class="x" data-close="vault" type="button" aria-label="Close">✕</button>
   <div class="vault-box">
-    <div class="vault-ball" aria-hidden="true"></div>
+    <img class="vault-ball" src="assets/img/ball-64.png" alt="" width="64" height="64">
     <p class="eyebrow">From the card</p>
     <h2 class="h2">What's the word?</h2>
     <form id="vaultForm" autocomplete="off">
