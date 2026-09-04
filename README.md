@@ -6,7 +6,7 @@ Three things live here:
 
 1. **A scrollable landing page** — neon hero over a lit dance floor, marquee tickers, a skyline, "the legend (mostly true)."
 2. **The Photo Booth** — an AI image booth that puts *Pa and Grant* into absurd scenes. Type a prompt (or grab one of the ideas floating around the chat box), and it fills a five-frame film strip you can print, save as a PDF, or share as one image.
-3. **The Vault** — a password screen with **two** doors. The word on Dad's card opens the real letter. A different PIN opens a completely different, very long letter.
+3. **The Birthday Card** — one word, **two** completely different letters. The word printed in Dad's physical card opens the real one. A different PIN opens a decoy.
 
 No build step, no framework, no `npm install`. It's HTML, CSS and a few files of plain JavaScript.
 
@@ -90,7 +90,7 @@ The four **look** buttons (70s Film, Disco Inferno, Movie Poster, Polaroid) chan
 
 ---
 
-## The Vault
+## The Birthday Card
 
 Two passwords, two letters, and they behave identically so nobody can tell which door they walked through.
 
@@ -113,7 +113,14 @@ Input is trimmed and lower-cased before hashing, so `Wilmette`, `wilmette` and `
 
 Prefer plain text? Replace `hash: "..."` with `plain: "yourword"` in that same file — simpler, but readable in the source.
 
-> This is a party trick, not a security control. Anyone determined enough with dev tools can read both letters. It's built to stop a sister with a phone, and it does.
+> **This is a party trick, not a security control.** The hash stops someone
+> guessing at the page, but *both letters are plain text in `content.js`* — so
+> anyone who can read the source can read them. While this repo is **public**
+> that includes anybody who finds it on GitHub, sisters included.
+>
+> If the real letter is personal, make the repo private first:
+> Settings → General → bottom → Change visibility. Vercel deploys private repos
+> free, so nothing about the deploy changes.
 
 ### Changing the letters
 
@@ -142,10 +149,10 @@ assets/css/style.css     all the styling, including the print stylesheet
 assets/css/fonts.css     self-hosted @font-face rules
 assets/fonts/            the font files (see NOTICE)
 assets/crew/             the four reference face crops, loaded automatically
-assets/roll/             the five frames the page opens with
+assets/roll/             five frames shot ahead of time (not loaded — kept for printing)
 assets/js/config.js      ← passwords, model, slot count
 assets/js/content.js     ← the letters, the idea prompts, the prompt template
-assets/js/app.js         UI: chat, queue, film strip, vault, print, share
+assets/js/app.js         UI: prompt, queue, film strip, card, print, share
 assets/js/nano.js        talks to the image model
 assets/js/store.js       IndexedDB + localStorage persistence
 assets/js/sha256.js      hashing for the vault

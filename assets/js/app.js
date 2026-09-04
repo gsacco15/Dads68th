@@ -544,14 +544,9 @@
         return;
       }
 
-      // An empty strip is the invitation to shoot, so only fall back to the
-      // frames we shot earlier when this copy genuinely can't reach the model.
+      // The strip always starts blank — five empty frames are the invitation,
+      // and a pre-filled roll reads as a finished album nobody needs to touch.
       window.NANO.available().then(function (canShoot) {
-        if (!canShoot && T.PRESET_ROLL && T.PRESET_ROLL.length) {
-          T.PRESET_ROLL.slice(0, C.SLOTS).forEach(function (r, i) {
-            roll[i] = { prompt: r.prompt, style: r.style, url: r.file };
-          });
-        }
         renderStrip();
 
         if (window.NANO.isDemo()) {
@@ -563,10 +558,6 @@
           say('bot', 'Camera\'s loaded and it already knows your faces — <b>Pa</b> and ' +
                      '<b>Grant</b> are on file. Tell me where to put you two and I\'ll shoot it. ' +
                      'Five frames to a roll. Grab an idea floating around if you want a head start.');
-        } else if (filledCount()) {
-          say('bot', 'Here\'s a roll we shot earlier — click any frame to blow it up. ' +
-                     '<b>This copy can\'t reach the camera</b>, so it can\'t shoot new ones. ' +
-                     'The live version can: same page, hosted properly.');
         } else {
           say('bot', 'The camera\'s not connected here. Hit <b>⚙ key</b> to add one, or open ' +
                      'the hosted version where the key already lives on the server.');

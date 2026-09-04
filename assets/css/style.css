@@ -598,24 +598,30 @@ button,input,select{font:inherit;color:inherit}
   content:"";position:absolute;left:1.1rem;right:1.1rem;height:1px;background:rgba(245,194,76,.28);
 }
 .door-frame::before{top:1.1rem}.door-frame::after{bottom:1.1rem}
-.peephole{
-  width:56px;height:56px;margin:0 auto 1.4rem;border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#3a2d1a,#0d0a12 70%);
-  border:2px solid rgba(245,194,76,.55);display:grid;place-items:center;
-  box-shadow:0 0 26px rgba(245,194,76,.3),inset 0 2px 8px rgba(0,0,0,.9);
+.seal{
+  width:74px;height:74px;margin:0 auto 1.5rem;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 36% 30%,#f6d585,var(--gold) 42%,#9a6f1c 100%);
+  box-shadow:0 0 34px rgba(245,194,76,.35),inset 0 -4px 10px rgba(0,0,0,.45),
+             inset 0 3px 8px rgba(255,255,255,.5);
+  animation:sealPulse 5s ease-in-out infinite;
 }
-.peephole span{
-  width:14px;height:14px;border-radius:50%;background:var(--gold);
-  box-shadow:0 0 16px var(--gold);animation:peep 4s ease-in-out infinite;
+.seal span{
+  font-family:var(--display);font-size:1.6rem;color:#4a3208;
+  text-shadow:0 1px 0 rgba(255,255,255,.35);
 }
-@keyframes peep{0%,88%,100%{transform:scale(1);opacity:.9}92%{transform:scale(.2);opacity:.4}}
+@keyframes sealPulse{
+  0%,100%{box-shadow:0 0 34px rgba(245,194,76,.35),inset 0 -4px 10px rgba(0,0,0,.45),inset 0 3px 8px rgba(255,255,255,.5)}
+  50%{box-shadow:0 0 52px rgba(245,194,76,.6),inset 0 -4px 10px rgba(0,0,0,.45),inset 0 3px 8px rgba(255,255,255,.5)}
+}
 .door-eyebrow{
   font-family:var(--cond);text-transform:uppercase;letter-spacing:.36em;
   font-size:.72rem;color:var(--gold);margin:0;
 }
 .door-title{
   font-family:var(--display);text-transform:uppercase;
-  font-size:clamp(2.6rem,9vw,4.4rem);margin:.15em 0 .3em;line-height:.9;
+  font-size:clamp(2rem,6.5vw,3.5rem);margin:.15em 0 .35em;line-height:.92;
+  text-wrap:balance;overflow-wrap:break-word;
   background:linear-gradient(180deg,var(--cream),var(--gold-deep));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
