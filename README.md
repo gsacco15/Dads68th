@@ -171,6 +171,21 @@ The two files you'll actually want to edit are marked with `←`.
 
 ---
 
+## Caching
+
+`vercel.json` makes the page and its code revalidate on every visit, while
+fonts cache for a year and pictures for an hour. Without that, a browser can
+end up holding an **old stylesheet against new markup** — which is exactly how
+the disco ball disappears, since the old CSS painted a gradient onto a `<div>`
+and the current markup is an `<img>`. `must-revalidate` still serves from cache
+on a 304, so it costs nothing when nothing has changed.
+
+The CSS and JS links also carry a `?v=` tag. Headers only govern future
+fetches; the version tag is what dislodges a copy already sitting in someone's
+browser. **Bump it in `index.html` whenever you change CSS or JS.**
+
+---
+
 ## Link previews
 
 `index.html` carries Open Graph and Twitter card tags, so the link arrives in a
