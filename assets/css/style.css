@@ -618,6 +618,7 @@ button,input,select{font:inherit;color:inherit}
   filter:drop-shadow(0 26px 40px rgba(0,0,0,.65));
 }
 .camera[hidden]{display:none}
+.camera picture{display:block;line-height:0}
 .camera img{width:100%;height:auto;display:block;user-select:none;-webkit-user-drag:none}
 
 .camera .hot{
