@@ -267,6 +267,23 @@
         </div>
       </div>
       <div class="strip" id="strip"></div>
+      <!-- The camera plate. Hidden until its image actually loads, so a
+           missing file leaves the plain buttons doing the job, not a gap. -->
+      <div class="camera" id="camera" hidden>
+        <img id="cameraPlate" src="assets/img/camera-controls.png" alt="" draggable="false">
+        <!-- Hit areas are placed in % of the plate, so they track the image at
+             any width with no measuring JS and nothing to keep in sync. -->
+        <button class="hot" id="hotPrint" type="button"
+                aria-label="Print the roll or save it as a PDF"
+                style="--x:21%;--y:63%;--w:15%;--h:48%"></button>
+        <button class="hot" id="hotShare" type="button"
+                aria-label="Share the whole strip as one image"
+                style="--x:48.5%;--y:63%;--w:16%;--h:48%"></button>
+        <button class="hot" id="hotNew" type="button"
+                aria-label="Start a new roll"
+                style="--x:74.5%;--y:63%;--w:16%;--h:48%"></button>
+      </div>
+
       <p class="roll-foot">PA'S 68<sup>TH</sup> · KODACHROME · SHOT IN BROOKLYN, MOSTLY</p>
     </div>
   </section>

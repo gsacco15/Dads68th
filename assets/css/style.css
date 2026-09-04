@@ -605,6 +605,44 @@ button,input,select{font:inherit;color:inherit}
 }
 .frame:hover .kill{display:grid}
 .frame.filled:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 18px 40px -18px #000}
+/* =============================================================
+   CAMERA CONTROL PLATE
+   The image is never touched — it just sits at 100% width inside a
+   shrink-wrapping container, and the hit areas are placed in % of
+   that same box. So they stay locked to the dials at every size,
+   with no resize listeners and nothing to recalculate.
+   ============================================================= */
+.camera{
+  position:relative;display:block;
+  width:min(720px,100%);margin:2.2rem auto 0;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.65));
+}
+.camera[hidden]{display:none}
+.camera img{width:100%;height:auto;display:block;user-select:none;-webkit-user-drag:none}
+
+.camera .hot{
+  position:absolute;
+  left:var(--x);top:var(--y);
+  width:var(--w);height:var(--h);
+  transform:translate(-50%,-50%);
+  padding:0;border:0;border-radius:14px;
+  background:transparent;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .18s;
+}
+/* Invisible, as asked — but a press needs to feel like it landed, and a
+   keyboard user needs to see where they are. */
+.camera .hot:hover{background:rgba(245,194,76,.10)}
+.camera .hot:active{background:rgba(245,194,76,.20)}
+.camera .hot:focus-visible{
+  outline:2px solid var(--gold);outline-offset:3px;background:rgba(245,194,76,.12);
+}
+@media (hover:none){.camera .hot:hover{background:transparent}}
+
+/* the plain buttons stay as the fallback when the plate can't load */
+.camera-on .roll-actions{display:none}
+
 .roll-foot{
   text-align:center;margin:.9rem 0 0;font-family:var(--cond);
   text-transform:uppercase;letter-spacing:.3em;font-size:.66rem;color:var(--smoke-2);

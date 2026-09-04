@@ -758,6 +758,44 @@
     document.body.classList.add('printing-roll');
   }
 
+  /* The camera plate drives the same three actions as the plain buttons.
+     It only takes over once its image has genuinely loaded — if the file is
+     missing or blocked, the buttons stay and nothing is lost.
+
+     The hit areas stay live even when the roll is empty: an invisible control
+     that silently does nothing is worse than one that tells you why. */
+  function initCameraPlate() {
+    var plate = $('#cameraPlate');
+    var camera = $('#camera');
+    if (!plate || !camera) return;
+
+    function reveal() {
+      if (!plate.naturalWidth) return;
+      camera.hidden = false;
+      document.body.classList.add('camera-on');
+    }
+    if (plate.complete) reveal();
+    plate.addEventListener('load', reveal);
+    plate.addEventListener('error', function () {
+      camera.hidden = true;
+      document.body.classList.remove('camera-on');
+    });
+
+    $('#hotPrint').onclick = function () {
+      if (!filledCount()) {
+        return say('err', 'Nothing on the roll yet — shoot a frame first.');
+      }
+      $('#printBtn').click();
+    };
+    $('#hotShare').onclick = function () {
+      if (!filledCount()) {
+        return say('err', 'Nothing to share yet — shoot a frame first.');
+      }
+      $('#shareBtn').click();
+    };
+    $('#hotNew').onclick = function () { $('#clearBtn').click(); };
+  }
+
   function initPrint() {
     addEventListener('beforeprint', preparePrint);
     addEventListener('afterprint', function () {
@@ -1039,6 +1077,7 @@
     initChat();
     initLightbox();
     initPrint();
+    initCameraPlate();
     initShare();
     initKey();
     initVault();
