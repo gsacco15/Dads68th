@@ -18,8 +18,12 @@ window.NANO = (function () {
   var proxyChecked = false;
   var proxyOK = false;
 
-  // Forced on in the hosted preview, where the sandbox blocks outside API calls.
-  var DEMO = /[?&]demo=1/.test(location.search) || !!window.PA68_PREVIEW;
+  var DEMO = /[?&]demo=1/.test(location.search);
+
+  /* The claude.ai artifact viewer blocks every outbound API call, so that copy
+     genuinely cannot shoot. Say so plainly rather than quietly handing back
+     drawn placeholders that look like a failed generation. */
+  var PREVIEW = !!window.PA68_PREVIEW;
 
   /* ---------------------------------------------------------
      Is a server proxy sitting at /api/generate?
@@ -161,6 +165,12 @@ window.NANO = (function () {
      --------------------------------------------------------- */
   function generate(prompt, images, label) {
     images = images || [];
+    if (PREVIEW) {
+      var pe = new Error('This preview copy can\'t reach the camera — the page sandbox blocks ' +
+                         'outgoing API calls. The hosted version shoots for real.');
+      pe.preview = true;
+      return Promise.reject(pe);
+    }
     if (DEMO) return demoImage(label || prompt);
 
     return checkProxy().then(function (useProxy) {
@@ -216,13 +226,25 @@ window.NANO = (function () {
     });
   }
 
+  /* Can this copy of the page actually reach the model? True when a server
+     proxy holds the key, when the viewer has pasted their own, or in demo
+     mode. False inside the artifact viewer, where outbound calls are blocked. */
+  function available() {
+    if (PREVIEW) return Promise.resolve(false);
+    if (DEMO) return Promise.resolve(true);
+    if (getKey()) return Promise.resolve(true);
+    return checkProxy();
+  }
+
   return {
     generate: generate,
+    available: available,
     checkProxy: checkProxy,
     getKey: getKey,
     setKey: setKey,
     getModel: getModel,
     setModel: setModel,
-    isDemo: function () { return DEMO; }
+    isDemo: function () { return DEMO; },
+    isPreview: function () { return PREVIEW; }
   };
 })();
