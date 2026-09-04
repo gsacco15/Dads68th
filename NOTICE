@@ -1,0 +1,18 @@
+Third-party fonts bundled in assets/fonts/
+==========================================
+
+The following typefaces are served from Google Fonts and are included here
+(latin subset, woff2) so the page renders identically without a network
+connection. Each is redistributed under its original licence.
+
+  Anton              — SIL Open Font License 1.1
+  Monoton            — SIL Open Font License 1.1
+  Yellowtail         — Apache License 2.0
+  Barlow             — SIL Open Font License 1.1
+  Barlow Condensed   — SIL Open Font License 1.1
+  Special Elite      — Apache License 2.0
+
+SIL Open Font License 1.1:  https://scripts.sil.org/OFL
+Apache License 2.0:         https://www.apache.org/licenses/LICENSE-2.0
+
+Font sources and full licence texts:  https://fonts.google.com

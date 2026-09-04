@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PA @ 68 — Saturday Night Forever</title>
+<meta name="description" content="A 68th birthday party for the best dancer in Brooklyn.">
+<meta name="theme-color" content="#08060B">
+
+<link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/monoton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕺</text></svg>">
+</head>
+<body>
+
+<!-- ============ atmosphere ============ -->
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<canvas id="fx" class="fx" aria-hidden="true"></canvas>
+
+<!-- ============ top bar ============ -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="#top">
+    <span class="brand-ball" aria-hidden="true"></span>
+    <span class="brand-txt">PA <em>@</em> 68</span>
+  </a>
+  <nav class="nav">
+    <a href="#legend">The Legend</a>
+    <a href="#booth">Photo Booth</a>
+    <a href="#vault-cta" class="nav-vault">The Vault</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="floor" aria-hidden="true"><div class="floor-grid" id="floorGrid"></div></div>
+    <div class="beams" aria-hidden="true"></div>
+
+    <div class="ball-rig" aria-hidden="true">
+      <div class="ball-cord"></div>
+      <div class="ball"><span class="ball-shine"></span></div>
+    </div>
+
+    <div class="hero-inner">
+      <p class="kicker">Bay Ridge &middot; Brooklyn &middot; est. 1958</p>
+      <h1 class="hero-title">
+        <span class="neon" data-flicker>Saturday</span>
+        <span class="script">night</span>
+        <span class="neon neon-2">Forever</span>
+      </h1>
+      <p class="hero-sub">
+        Sixty&#8209;eight years on this earth and the man <em>still</em> walks
+        down the block like the sidewalk owes him money.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-hot" href="#booth">Open the photo booth</a>
+        <a class="btn btn-ghost" href="#vault-cta">I have a password</a>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true"><span></span>keep going, hotshot</div>
+  </section>
+
+  <!-- ============ TICKER ============ -->
+  <div class="band" aria-hidden="true">
+    <div class="band-track">
+      <span>Happy 68th Pa ★ Still the best dancer on the floor ★ Two left shoes, zero left feet ★ Brooklyn made him, disco confirmed it ★</span>
+      <span>Happy 68th Pa ★ Still the best dancer on the floor ★ Two left shoes, zero left feet ★ Brooklyn made him, disco confirmed it ★</span>
+    </div>
+  </div>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats reveal" id="stats">
+    <div class="stat"><b class="count" data-to="68">0</b><span>trips around the sun</span></div>
+    <div class="stat"><b class="count" data-to="1958">0</b><span>the year it all started</span></div>
+    <div class="stat"><b class="count" data-to="19">0</b><span>his age when <i>Fever</i> hit</span></div>
+    <div class="stat"><b>∞</b><span>stories, told twice, differently</span></div>
+  </section>
+
+  <!-- ============ THE LEGEND ============ -->
+  <section class="legend" id="legend">
+    <div class="skyline" aria-hidden="true">
+      <svg viewBox="0 0 1440 260" preserveAspectRatio="none" class="sky-svg">
+        <defs>
+          <linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1b1030"/><stop offset="100%" stop-color="#08060B"/>
+          </linearGradient>
+        </defs>
+        <!-- bridge -->
+        <g stroke="#2b1c4a" fill="none" stroke-width="3">
+          <path d="M0 150 Q 200 60 360 150 Q 520 60 700 150" />
+          <path d="M0 168 Q 200 92 360 168 Q 520 92 700 168" opacity=".5"/>
+        </g>
+        <g fill="#20143a">
+          <rect x="0" y="148" width="712" height="6"/>
+          <rect x="352" y="60" width="16" height="180"/>
+          <rect x="694" y="60" width="16" height="180"/>
+          <rect x="344" y="86" width="32" height="7"/>
+          <rect x="686" y="86" width="32" height="7"/>
+        </g>
+        <!-- skyline blocks -->
+        <g fill="url(#skyfade)">
+          <rect x="0" y="176" width="1440" height="90"/>
+        </g>
+        <g fill="#160d2b">
+          <rect x="20" y="150" width="46" height="110"/><rect x="72" y="176" width="30" height="84"/>
+          <rect x="110" y="128" width="38" height="132"/><rect x="156" y="164" width="54" height="96"/>
+          <rect x="220" y="142" width="28" height="118"/><rect x="256" y="180" width="62" height="80"/>
+          <rect x="392" y="158" width="40" height="102"/><rect x="440" y="132" width="26" height="128"/>
+          <rect x="474" y="172" width="58" height="88"/><rect x="540" y="150" width="34" height="110"/>
+          <rect x="582" y="184" width="44" height="76"/><rect x="634" y="160" width="30" height="100"/>
+          <rect x="740" y="140" width="52" height="120"/><rect x="800" y="170" width="30" height="90"/>
+          <rect x="838" y="120" width="40" height="140"/><rect x="886" y="166" width="56" height="94"/>
+          <rect x="950" y="148" width="30" height="112"/><rect x="988" y="180" width="60" height="80"/>
+          <rect x="1056" y="136" width="36" height="124"/><rect x="1100" y="168" width="48" height="92"/>
+          <rect x="1156" y="152" width="28" height="108"/><rect x="1192" y="178" width="66" height="82"/>
+          <rect x="1266" y="144" width="38" height="116"/><rect x="1312" y="174" width="52" height="86"/>
+          <rect x="1372" y="156" width="48" height="104"/>
+        </g>
+        <!-- water towers -->
+        <g fill="#160d2b">
+          <path d="M120 120 l10 -14 h18 l10 14 z"/><rect x="126" y="120" width="26" height="12"/>
+          <path d="M846 112 l9 -13 h17 l9 13 z"/><rect x="851" y="112" width="25" height="11"/>
+        </g>
+        <!-- windows -->
+        <g fill="#f5c24c" opacity=".55" class="windows"></g>
+      </svg>
+    </div>
+
+    <div class="legend-inner">
+      <p class="eyebrow">The legend <em>(mostly true)</em></p>
+      <h2 class="h2">The kid from the third floor</h2>
+      <div class="cards">
+        <article class="card reveal">
+          <span class="card-yr">1958</span>
+          <h3>Arrives</h3>
+          <p>Shows up in Brooklyn already annoyed that the room isn't warmer.
+             Doctors report a full head of hair and strong opinions.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-yr">1977</span>
+          <h3>The Fever</h3>
+          <p>Nineteen years old, paint can in one hand, borough in the other.
+             The white suit was never confirmed. It was never denied either.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-yr">Later</span>
+          <h3>Becomes Pa</h3>
+          <p>Trades the dance floor for a driveway, a grill, and a rotating set of
+             stories that get better and less accurate every single year.</p>
+        </article>
+        <article class="card reveal card-hot">
+          <span class="card-yr">Tonight</span>
+          <h3>Sixty‑eight</h3>
+          <p>Same walk. Same hair. Same refusal to let anyone else pay the check.
+             Ladies and gentlemen — the man of the hour.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="band band-rev" aria-hidden="true">
+    <div class="band-track">
+      <span>★ Ah, ah, ah, ah ★ Stayin' alive ★ 68 and counting ★ Somebody get this man a mirror ball ★</span>
+      <span>★ Ah, ah, ah, ah ★ Stayin' alive ★ 68 and counting ★ Somebody get this man a mirror ball ★</span>
+    </div>
+  </div>
+
+  <!-- ============ PHOTO BOOTH ============ -->
+  <section class="booth" id="booth">
+    <div class="booth-head reveal">
+      <p class="eyebrow">Section II</p>
+      <h2 class="h2">The <span class="grad">Photo&nbsp;Booth</span></h2>
+      <p class="lede">
+        Tell the booth what you want. It puts <b>Pa</b> and <b>Grant</b> in it.
+        Five frames to a roll — then print it, save it, or send it to the group chat
+        and ruin everyone's afternoon.
+      </p>
+    </div>
+
+    <!-- crew / reference photos -->
+    <details class="crew reveal" id="crew">
+      <summary>
+        <span class="crew-title">The Crew</span>
+        <span class="crew-hint" id="crewHint">Add reference photos so it actually looks like you two →</span>
+      </summary>
+      <div class="crew-body">
+        <p class="crew-note">
+          Drop in 2–4 clear photos (faces visible, good light). They stay on this device —
+          nothing is uploaded anywhere except to the image model when you hit generate.
+        </p>
+        <div class="crew-grid" id="crewGrid"></div>
+        <label class="upload">
+          <input type="file" id="crewInput" accept="image/*" multiple hidden>
+          <span>＋ Add photos</span>
+        </label>
+      </div>
+    </details>
+
+    <!-- chat + floating ideas -->
+    <div class="console reveal">
+      <div class="ideas" id="ideas" aria-label="Idea suggestions"></div>
+
+      <div class="chat">
+        <div class="chat-top">
+          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+          <span class="chat-name">BOOTH&nbsp;OPERATOR</span>
+          <button class="chat-key" id="keyBtn" type="button" title="API key">⚙ key</button>
+        </div>
+
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+
+        <div class="styles" id="styles" role="group" aria-label="Look">
+          <button type="button" data-style="film" class="on">70s Film</button>
+          <button type="button" data-style="disco">Disco Inferno</button>
+          <button type="button" data-style="poster">Movie Poster</button>
+          <button type="button" data-style="polaroid">Polaroid</button>
+        </div>
+
+        <form class="chat-form" id="chatForm" autocomplete="off">
+          <input id="promptInput" type="text" maxlength="320"
+                 placeholder="pa and grant fishing off the pier at sunrise…">
+          <button class="go" type="submit" id="goBtn">
+            <span>Shoot it</span>
+          </button>
+        </form>
+        <p class="chat-foot"><span id="queueInfo">Roll: 0 / 5 frames</span> · click an idea to load it · hit enter to fire</p>
+      </div>
+    </div>
+
+    <!-- film strip -->
+    <div class="roll reveal">
+      <div class="roll-head">
+        <h3>The Roll</h3>
+        <div class="roll-actions">
+          <button class="mini" id="printBtn" type="button">🖨 Print / PDF</button>
+          <button class="mini" id="shareBtn" type="button">↗ Share strip</button>
+          <button class="mini ghost" id="clearBtn" type="button">New roll</button>
+        </div>
+      </div>
+      <div class="strip" id="strip"></div>
+      <p class="roll-foot">PA'S 68<sup>TH</sup> · KODACHROME · SHOT IN BROOKLYN, MOSTLY</p>
+    </div>
+  </section>
+
+  <!-- ============ VAULT CTA ============ -->
+  <section class="vault-cta" id="vault-cta">
+    <div class="door reveal">
+      <div class="door-frame">
+        <div class="peephole"><span></span></div>
+        <p class="door-eyebrow">Members only</p>
+        <h2 class="door-title">The&nbsp;Vault</h2>
+        <p class="door-copy">
+          There's a letter in here. You need the word off the card to read it.
+          If you don't have the card — respectfully — you're not on the list.
+        </p>
+        <button class="btn btn-gold" id="openVault" type="button">Knock three times</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="foot-script">Happy 68th, Pa.</p>
+    <p class="foot-sub">Made with a great deal of love and a small amount of restraint. — Grant</p>
+  </footer>
+</main>
+
+<!-- ============ VAULT OVERLAY ============ -->
+<div class="overlay vault-overlay" id="vault" hidden>
+  <button class="x" data-close="vault" type="button" aria-label="Close">✕</button>
+  <div class="vault-box">
+    <div class="vault-ball" aria-hidden="true"></div>
+    <p class="eyebrow">Say the word</p>
+    <h2 class="h2">Who's asking?</h2>
+    <form id="vaultForm" autocomplete="off">
+      <input id="vaultInput" type="password" inputmode="text" placeholder="• • • • • • • •" aria-label="Password">
+      <button class="btn btn-gold" type="submit">Enter</button>
+    </form>
+    <p class="vault-msg" id="vaultMsg"></p>
+  </div>
+</div>
+
+<!-- ============ LETTER OVERLAY ============ -->
+<div class="overlay letter-overlay" id="letter" hidden>
+  <button class="x dark" data-close="letter" type="button" aria-label="Close">✕</button>
+  <button class="print-letter" id="printLetter" type="button">🖨 Print</button>
+  <article class="paper" id="paper"></article>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="overlay lightbox" id="lightbox" hidden>
+  <button class="x" data-close="lightbox" type="button" aria-label="Close">✕</button>
+  <figure>
+    <img id="lightboxImg" alt="">
+    <figcaption id="lightboxCap"></figcaption>
+  </figure>
+  <div class="lb-actions">
+    <button class="mini" id="lbDownload" type="button">⤓ Save</button>
+    <button class="mini" id="lbRegen" type="button">⟳ Reshoot</button>
+  </div>
+</div>
+
+<!-- ============ API KEY MODAL ============ -->
+<div class="overlay key-overlay" id="keyModal" hidden>
+  <button class="x" data-close="keyModal" type="button" aria-label="Close">✕</button>
+  <div class="key-box">
+    <p class="eyebrow">Nano Banana</p>
+    <h2 class="h2">Feed the machine</h2>
+    <p class="key-copy">
+      Paste a Google AI Studio API key. It's stored only in this browser
+      (<code>localStorage</code>) and sent straight to Google when you generate.
+      Get one free at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.
+    </p>
+    <input id="keyInput" type="password" placeholder="AIza…" autocomplete="off">
+    <label class="model-row">
+      <span>Model</span>
+      <select id="modelSelect">
+        <option value="gemini-2.5-flash-image">Nano Banana (fast, cheap)</option>
+        <option value="gemini-3-pro-image-preview">Nano Banana Pro (slower, sharper)</option>
+      </select>
+    </label>
+    <div class="key-actions">
+      <button class="btn btn-hot" id="keySave" type="button">Save key</button>
+      <button class="btn btn-ghost" id="keyClear" type="button">Forget it</button>
+    </div>
+    <p class="key-note" id="keyNote"></p>
+  </div>
+</div>
+
+<!-- ============ PRINT SHEET (print only) ============ -->
+<div class="printsheet" id="printsheet" aria-hidden="true"></div>
+
+<script src="assets/js/sha256.js"></script>
+<script src="assets/js/content.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/nano.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
