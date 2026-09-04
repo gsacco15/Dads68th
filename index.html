@@ -208,29 +208,33 @@
       <div class="chat">
         <div class="chat-top">
           <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-          <span class="chat-name">BOOTH&nbsp;OPERATOR</span>
+          <span class="chat-name">THE&nbsp;BOOTH &middot; 5&#8209;FRAME&nbsp;ROLL</span>
           <button class="chat-key" id="keyBtn" type="button" title="API key">⚙ key</button>
         </div>
 
-        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <div class="chat-body">
+          <label class="ask" for="promptInput">Where should we put you two?</label>
 
-        <div class="styles" id="styles" role="group" aria-label="Look">
-          <button type="button" data-style="film" class="on">70s Film</button>
-          <button type="button" data-style="disco">Disco Inferno</button>
-          <button type="button" data-style="poster">Movie Poster</button>
-          <button type="button" data-style="polaroid">Polaroid</button>
-        </div>
+          <form class="chat-form" id="chatForm" autocomplete="off">
+            <input id="promptInput" type="text" maxlength="320"
+                   placeholder="pa and grant fishing off the pier at sunrise…">
+            <button class="go" type="submit" id="goBtn">
+              <span>Shoot it</span>
+            </button>
+          </form>
 
-        <form class="chat-form" id="chatForm" autocomplete="off">
-          <input id="promptInput" type="text" maxlength="320"
-                 placeholder="pa and grant fishing off the pier at sunrise…">
-          <button class="go" type="submit" id="goBtn">
-            <span>Shoot it</span>
-          </button>
-        </form>
-        <p class="chat-foot"><span id="queueInfo">Roll: 0 / 5 frames</span> · click an idea to load it · hit enter to fire</p>
-      </div>
-    </div>
+          <div class="styles" id="styles" role="group" aria-label="Look">
+            <button type="button" data-style="film" class="on">70s Film</button>
+            <button type="button" data-style="disco">Disco Inferno</button>
+            <button type="button" data-style="poster">Movie Poster</button>
+            <button type="button" data-style="polaroid">Polaroid</button>
+          </div>
+
+          <p class="status" id="status" aria-live="polite"></p>
+          <p class="chat-foot"><span id="queueInfo">Roll: 0 / 5 frames</span> · tap an idea to load it · enter to fire</p>
+        </div><!-- /.chat-body -->
+      </div><!-- /.chat -->
+    </div><!-- /.console -->
 
     <!-- film strip -->
     <div class="roll reveal">
