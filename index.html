@@ -4,8 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PA @ 68 — Saturday Night Forever</title>
-<meta name="description" content="A 68th birthday party for the best dancer in Brooklyn.">
+<meta name="description" content="A 68th birthday party for the best dancer in Brooklyn. Open the photo booth.">
 <meta name="theme-color" content="#08060B">
+
+<!-- How the link looks when it lands in a text message or the group chat.
+     og:image is relative, which every major scraper resolves against the page
+     URL; swap in the full https:// address if you ever want to be certain. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pa @ 68">
+<meta property="og:title" content="Pa's 68th — Saturday Night Forever">
+<meta property="og:description" content="Brooklyn, 1977, and a photo booth that puts Pa and Grant anywhere you want them. There's a letter in here too.">
+<meta property="og:image" content="assets/img/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A mirror ball over the words Pa's 68th, Saturday Night Forever.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pa's 68th — Saturday Night Forever">
+<meta name="twitter:description" content="Brooklyn, 1977, and a photo booth that puts Pa and Grant anywhere you want them.">
+<meta name="twitter:image" content="assets/img/share-card.jpg">
 
 <link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/monoton-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -302,6 +318,8 @@
 <!-- ============ LIGHTBOX ============ -->
 <div class="overlay lightbox" id="lightbox" hidden>
   <button class="x" data-close="lightbox" type="button" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" type="button" aria-label="Previous frame">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" type="button" aria-label="Next frame">›</button>
   <figure>
     <img id="lightboxImg" alt="">
     <figcaption id="lightboxCap"></figcaption>
