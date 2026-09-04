@@ -29,7 +29,7 @@
   <nav class="nav">
     <a href="#legend">The Legend</a>
     <a href="#booth">Photo Booth</a>
-    <a href="#vault-cta" class="nav-vault">The Vault</a>
+    <a href="#card" class="nav-vault">Birthday Card</a>
   </nav>
 </header>
 
@@ -58,7 +58,7 @@
       </p>
       <div class="hero-cta">
         <a class="btn btn-hot" href="#booth">Open the photo booth</a>
-        <a class="btn btn-ghost" href="#vault-cta">I have a password</a>
+        <a class="btn btn-ghost" href="#card">Open your card</a>
       </div>
     </div>
 
@@ -251,18 +251,18 @@
     </div>
   </section>
 
-  <!-- ============ VAULT CTA ============ -->
-  <section class="vault-cta" id="vault-cta">
+  <!-- ============ THE CARD ============ -->
+  <section class="vault-cta" id="card">
     <div class="door reveal">
       <div class="door-frame">
-        <div class="peephole"><span></span></div>
-        <p class="door-eyebrow">Members only</p>
-        <h2 class="door-title">The&nbsp;Vault</h2>
+        <div class="seal" aria-hidden="true"><span>68</span></div>
+        <p class="door-eyebrow">For Pa &middot; from Grant</p>
+        <h2 class="door-title">Your Birthday Card</h2>
         <p class="door-copy">
-          There's a letter in here. You need the word off the card to read it.
-          If you don't have the card — respectfully — you're not on the list.
+          There's a letter in here, written just for you. The word that opens it
+          is printed inside the card in your hand.
         </p>
-        <button class="btn btn-gold" id="openVault" type="button">Knock three times</button>
+        <button class="btn btn-gold" id="openVault" type="button">Open my card</button>
       </div>
     </div>
   </section>
@@ -278,11 +278,11 @@
   <button class="x" data-close="vault" type="button" aria-label="Close">✕</button>
   <div class="vault-box">
     <div class="vault-ball" aria-hidden="true"></div>
-    <p class="eyebrow">Say the word</p>
-    <h2 class="h2">Who's asking?</h2>
+    <p class="eyebrow">From the card</p>
+    <h2 class="h2">What's the word?</h2>
     <form id="vaultForm" autocomplete="off">
-      <input id="vaultInput" type="password" inputmode="text" placeholder="• • • • • • • •" aria-label="Password">
-      <button class="btn btn-gold" type="submit">Enter</button>
+      <input id="vaultInput" type="password" inputmode="text" placeholder="type it here" aria-label="The word from your card">
+      <button class="btn btn-gold" type="submit">Open it</button>
     </form>
     <p class="vault-msg" id="vaultMsg"></p>
   </div>
