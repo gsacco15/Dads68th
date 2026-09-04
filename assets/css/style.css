@@ -420,7 +420,7 @@ button,input,select{font:inherit;color:inherit}
 
 /* console: chat + floating ideas */
 .console{position:relative;margin:2.2rem 0 3rem;padding:clamp(1rem,5vw,3.4rem) 0}
-@media (min-width:1061px){.console{min-height:560px}}
+@media (min-width:1061px){.console{min-height:470px}}
 .ideas{position:absolute;inset:0;pointer-events:none;z-index:1}
 .idea{
   position:absolute;pointer-events:auto;cursor:pointer;
