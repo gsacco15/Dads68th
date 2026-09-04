@@ -614,7 +614,7 @@ button,input,select{font:inherit;color:inherit}
    ============================================================= */
 .camera{
   position:relative;display:block;
-  width:min(720px,100%);margin:2.2rem auto 0;
+  width:min(720px,100%);margin:.4rem auto 1.6rem;
   filter:drop-shadow(0 26px 40px rgba(0,0,0,.65));
 }
 .camera[hidden]{display:none}
