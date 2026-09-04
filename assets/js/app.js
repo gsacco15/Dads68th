@@ -274,19 +274,24 @@
      ========================================================= */
   var style = window.STORE.local('style') || 'film';
 
+  /* One status line, not a transcript. Later messages replace earlier ones —
+     the film strip already shows which frames are developing, so a running
+     log of bubbles was just noise dressed up as a conversation. */
   function say(kind, html) {
-    var log = $('#chatLog');
-    var el = document.createElement('div');
-    el.className = 'msg ' + kind;
+    var el = $('#status');
+    el.className = 'status' + (/err/.test(kind) ? ' err' : '');
     el.innerHTML = html;
-    log.appendChild(el);
-    log.scrollTop = log.scrollHeight;
     return el;
   }
 
-  function typing() {
-    var el = say('bot typing', '<span></span><span></span><span></span>');
-    return { done: function () { el.remove(); } };
+  /* Named `pending`, not `busy` — `busy` is the per-slot flag array further
+     down this same scope, and `var busy = [...]` clobbers a hoisted function
+     of the same name. */
+  function pending(html) {
+    var el = $('#status');
+    el.className = 'status busy';
+    el.innerHTML = html;
+    return { done: function () { if (el.className.indexOf('busy') > -1) el.className = 'status'; } };
   }
 
   function initStyles() {
@@ -303,14 +308,14 @@
 
   /* ---- floating ideas ---- */
   var SPOTS = [
-    { left: '1%',  top: '6%',  rot: '-3deg' },
-    { left: '3%',  top: '31%', rot: '2deg' },
-    { left: '0%',  top: '57%', rot: '-2deg' },
-    { left: '5%',  top: '82%', rot: '3deg' },
-    { right: '2%', top: '10%', rot: '3deg' },
-    { right: '0%', top: '36%', rot: '-2deg' },
-    { right: '4%', top: '62%', rot: '2deg' },
-    { right: '1%', top: '86%', rot: '-3deg' }
+    { left: '1%',  top: '4%',  rot: '-3deg' },
+    { left: '3%',  top: '24%', rot: '2deg' },
+    { left: '0%',  top: '45%', rot: '-2deg' },
+    { left: '5%',  top: '66%', rot: '3deg' },
+    { right: '2%', top: '8%',  rot: '3deg' },
+    { right: '0%', top: '28%', rot: '-2deg' },
+    { right: '4%', top: '49%', rot: '2deg' },
+    { right: '1%', top: '70%', rot: '-3deg' }
   ];
 
   function initIdeas() {
@@ -458,7 +463,8 @@
     var job = queue.shift();
     updateQueueInfo();
 
-    var tick = typing();
+    var tick = pending(T.PATTER[(Math.random() * T.PATTER.length) | 0] +
+                    ' Developing frame <b>' + String(job.slot + 1).padStart(2, '0') + '</b>…');
     var full = T.buildPrompt(job.prompt, job.style, crew);
 
     window.NANO.generate(full, crew, job.prompt)
@@ -499,8 +505,6 @@
       var text = input.value.trim();
       if (!text) return;
 
-      say('you', escapeHtml(text));
-
       // In the preview there's nothing to shoot with, so say that before
       // complaining about a full roll — the roll isn't the problem.
       if (window.NANO.isPreview()) {
@@ -517,8 +521,6 @@
       }
 
       input.value = '';
-      say('bot', T.PATTER[(Math.random() * T.PATTER.length) | 0] +
-                 ' <b>Frame ' + String(slot + 1).padStart(2, '0') + '</b>.');
       enqueue(text, slot);
     });
 
