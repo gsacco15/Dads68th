@@ -476,7 +476,9 @@
         tick.done();
         busy[job.slot] = false;
         renderStrip();
-        if (err && err.noKey) {
+        if (err && err.preview) {
+          say('err', err.message);
+        } else if (err && err.noKey) {
           say('err', 'I need an API key before I can shoot anything. Hit <b>⚙ key</b> up there.');
           openOverlay('keyModal');
         } else {
@@ -497,13 +499,23 @@
       var text = input.value.trim();
       if (!text) return;
 
+      say('you', escapeHtml(text));
+
+      // In the preview there's nothing to shoot with, so say that before
+      // complaining about a full roll — the roll isn't the problem.
+      if (window.NANO.isPreview()) {
+        input.value = '';
+        say('err', 'This preview copy can\'t reach the camera — the page sandbox blocks outgoing ' +
+                   'API calls, so no key would help. The hosted version shoots this for real.');
+        return;
+      }
+
       var slot = nextEmpty();
       if (slot === -1) {
         say('err', 'The roll is full. Clear a frame (hover it, hit ✕) or start a new roll.');
         return;
       }
 
-      say('you', escapeHtml(text));
       input.value = '';
       say('bot', T.PATTER[(Math.random() * T.PATTER.length) | 0] +
                  ' <b>Frame ' + String(slot + 1).padStart(2, '0') + '</b>.');
@@ -522,29 +534,42 @@
     window.STORE.getRoll().then(function (saved) {
       if (saved && saved.length === C.SLOTS) {
         roll = saved;
-      } else if (T.PRESET_ROLL && T.PRESET_ROLL.length) {
-        // first visit: open on the frames that were shot ahead of time
-        T.PRESET_ROLL.slice(0, C.SLOTS).forEach(function (r, i) {
-          roll[i] = { prompt: r.prompt, style: r.style, url: r.file };
-        });
+        renderStrip();
+        var n = filledCount();
+        say('bot', n
+          ? 'Welcome back — ' + n + ' frame' + (n > 1 ? 's' : '') + ' still on the roll.'
+          : 'Fresh roll in the camera. Where are we putting you two?');
+        return;
       }
-      renderStrip();
-      var n = filledCount();
-      if (window.PA68_PREVIEW) {
-        say('bot', '<b>Preview.</b> This hosted copy can\'t reach the image model — the page sandbox ' +
-                   'blocks outside API calls — so frames are drawn placeholders. Everything else is ' +
-                   'real: try the looks, the strip, print, share and the vault.');
-      } else if (window.NANO.isDemo()) {
-        say('bot', '<b>Demo mode.</b> Images are fake, drawn right here — good for checking the layout. ' +
-                   'Drop the <code>?demo=1</code> from the URL to shoot for real.');
-      }
-      var preset = !saved && T.PRESET_ROLL && T.PRESET_ROLL.length;
-      say('bot', preset
-        ? 'There\'s already a roll in the camera — five we shot earlier. Click any frame to ' +
-          'blow it up. Want more? Tell me a scene, or hit <b>New roll</b> to start clean.'
-        : (n ? 'Welcome back — ' + n + ' frame' + (n > 1 ? 's' : '') + ' still on the roll.'
-             : 'Alright. Tell me where to put you two and I\'ll shoot it. Grab an idea floating ' +
-               'around if you want a head start.'));
+
+      // An empty strip is the invitation to shoot, so only fall back to the
+      // frames we shot earlier when this copy genuinely can't reach the model.
+      window.NANO.available().then(function (canShoot) {
+        if (!canShoot && T.PRESET_ROLL && T.PRESET_ROLL.length) {
+          T.PRESET_ROLL.slice(0, C.SLOTS).forEach(function (r, i) {
+            roll[i] = { prompt: r.prompt, style: r.style, url: r.file };
+          });
+        }
+        renderStrip();
+
+        if (window.NANO.isDemo()) {
+          say('bot', '<b>Demo mode.</b> Frames are drawn locally — good for checking the ' +
+                     'layout without spending anything. Drop <code>?demo=1</code> to shoot for real.');
+        }
+
+        if (canShoot) {
+          say('bot', 'Camera\'s loaded and it already knows your faces — <b>Pa</b> and ' +
+                     '<b>Grant</b> are on file. Tell me where to put you two and I\'ll shoot it. ' +
+                     'Five frames to a roll. Grab an idea floating around if you want a head start.');
+        } else if (filledCount()) {
+          say('bot', 'Here\'s a roll we shot earlier — click any frame to blow it up. ' +
+                     '<b>This copy can\'t reach the camera</b>, so it can\'t shoot new ones. ' +
+                     'The live version can: same page, hosted properly.');
+        } else {
+          say('bot', 'The camera\'s not connected here. Hit <b>⚙ key</b> to add one, or open ' +
+                     'the hosted version where the key already lives on the server.');
+        }
+      });
     });
   }
 
