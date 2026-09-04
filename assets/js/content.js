@@ -413,8 +413,29 @@ window.CONTENT = (function () {
     'That\'s the whole inheritance right there.</em></p>'
   ].join('\n');
 
+  /* ---------------------------------------------------------
+     THE ROLL THE PAGE OPENS WITH.
+     Five frames already shot, so the page has real photographs
+     in it the moment it loads — no key, no setup, nothing for
+     him to do. Hitting "New roll" clears these and the booth
+     works normally from there.
+     --------------------------------------------------------- */
+  var PRESET_ROLL = [
+    { file: 'assets/roll/01-fishing.jpg', style: 'film',
+      prompt: 'pa and grant fishing off a Brooklyn pier at sunrise' },
+    { file: 'assets/roll/02-disco.jpg', style: 'disco',
+      prompt: 'pa and grant as the kings of a 1977 Brooklyn discotheque, matching white suits' },
+    { file: 'assets/roll/03-bocce.jpg', style: 'film',
+      prompt: 'pa and grant playing bocce in a tiny Italian hill town, taking it far too seriously' },
+    { file: 'assets/roll/04-lobster.jpg', style: 'film',
+      prompt: 'pa and grant on the subway holding one enormous live lobster' },
+    { file: 'assets/roll/05-record.jpg', style: 'poster',
+      prompt: 'pa and grant as a 1978 funk duo, fur collars, Brooklyn stoop' }
+  ];
+
   return {
     IDEAS: IDEAS,
+    PRESET_ROLL: PRESET_ROLL,
     STYLES: STYLES,
     PATTER: PATTER,
     buildPrompt: buildPrompt,
