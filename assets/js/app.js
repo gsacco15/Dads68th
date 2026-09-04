@@ -481,7 +481,14 @@
     };
 
     window.STORE.getRoll().then(function (saved) {
-      if (saved && saved.length === C.SLOTS) roll = saved;
+      if (saved && saved.length === C.SLOTS) {
+        roll = saved;
+      } else if (T.PRESET_ROLL && T.PRESET_ROLL.length) {
+        // first visit: open on the frames that were shot ahead of time
+        T.PRESET_ROLL.slice(0, C.SLOTS).forEach(function (r, i) {
+          roll[i] = { prompt: r.prompt, style: r.style, url: r.file };
+        });
+      }
       renderStrip();
       var n = filledCount();
       if (window.PA68_PREVIEW) {
@@ -492,10 +499,13 @@
         say('bot', '<b>Demo mode.</b> Images are fake, drawn right here — good for checking the layout. ' +
                    'Drop the <code>?demo=1</code> from the URL to shoot for real.');
       }
-      say('bot', n
-        ? 'Welcome back — ' + n + ' frame' + (n > 1 ? 's' : '') + ' still on the roll.'
-        : 'Alright. Tell me where to put you two and I\'ll shoot it. Grab an idea floating around ' +
-          'if you want a head start.');
+      var preset = !saved && T.PRESET_ROLL && T.PRESET_ROLL.length;
+      say('bot', preset
+        ? 'There\'s already a roll in the camera — five we shot earlier. Click any frame to ' +
+          'blow it up. Want more? Tell me a scene, or hit <b>New roll</b> to start clean.'
+        : (n ? 'Welcome back — ' + n + ' frame' + (n > 1 ? 's' : '') + ' still on the roll.'
+             : 'Alright. Tell me where to put you two and I\'ll shoot it. Grab an idea floating ' +
+               'around if you want a head start.'));
     });
   }
 
@@ -514,7 +524,9 @@
   function initLightbox() {
     $('#lbDownload').onclick = function () {
       if (lbIndex === null || !roll[lbIndex]) return;
-      saveFile(dataUrlToBlob(roll[lbIndex].url), 'pa-68-frame-' + (lbIndex + 1) + '.jpg');
+      toBlob(roll[lbIndex].url).then(function (b) {
+        saveFile(b, 'pa-68-frame-' + (lbIndex + 1) + '.jpg');
+      });
     };
     $('#lbRegen').onclick = function () {
       if (lbIndex === null || !roll[lbIndex]) return;
@@ -551,6 +563,13 @@
     var bytes = new Uint8Array(bin.length);
     for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
     return new Blob([bytes], { type: mime });
+  }
+
+  /* Frames are data URLs when freshly generated and file paths when they
+     came from the preset roll — normalise either to a Blob. */
+  function toBlob(url) {
+    if (url.slice(0, 5) === 'data:') return Promise.resolve(dataUrlToBlob(url));
+    return fetch(url).then(function (r) { return r.blob(); });
   }
 
   function saveFile(blob, name) {
