@@ -54,8 +54,7 @@ window.CONFIG = {
      with GEMINI_API_KEY set — the page will find /api/generate on
      its own and never ask for a key.
   ----------------------------------------------------------- */
-  MODEL: 'gemini-2.5-flash-image',        // "Nano Banana"
-  MODEL_PRO: 'gemini-3-pro-image-preview', // "Nano Banana Pro"
+  MODEL: 'gemini-2.5-flash-image',   // "Nano Banana" — the cheap, known-good one
   API_BASE: 'https://generativelanguage.googleapis.com/v1beta/models/',
   PROXY_PATH: '/api/generate',
 

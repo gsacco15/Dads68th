@@ -103,7 +103,12 @@ window.NANO = (function () {
              'Check the key is enabled for the Generative Language API. ' + msg;
     }
     if (res.status === 429) {
-      return 'Rate limited — you are going too fast for the free tier. Wait a beat and reshoot.';
+      if (/limit: ?0/.test(msg) || /free_tier/.test(msg)) {
+        return 'Image generation has no free tier. This key\'s Google project needs billing ' +
+               'switched on — aistudio.google.com → Billing → set up paid tier. It costs a few ' +
+               'cents per picture, then this works immediately.';
+      }
+      return 'Rate limited — too many shots too quickly. Give it a minute, then reshoot.';
     }
     if (res.status === 404) {
       return 'That model name is not available on this key (' + getModel() + '). ' +
