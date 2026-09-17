@@ -809,7 +809,13 @@ button,input,select{font:inherit;color:inherit}
 .paper em{font-style:italic}
 .paper strong{font-weight:400;background:linear-gradient(transparent 62%,rgba(245,194,76,.55) 62%)}
 .paper hr{border:0;height:1px;background:rgba(120,90,50,.3);margin:2.6rem 0}
+.paper hr.title-rule{
+  width:72px;height:3px;margin:.2rem 0 2.2rem;border-radius:2px;
+  background:linear-gradient(90deg,#c8862a,rgba(200,134,42,.15));
+}
+.paper .signoff{font-style:italic;color:#5b4a35;margin:2.6rem 0 0}
 .paper .sig{font-family:var(--script);font-size:2.2rem;color:#2a1d12;margin-top:1.2rem;line-height:1.2}
+.paper .signoff + .sig{margin-top:.1rem}
 .paper .ps{font-size:.92rem;color:#5b4a35}
 
 /* lightbox */
