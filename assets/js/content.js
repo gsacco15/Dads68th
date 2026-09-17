@@ -122,84 +122,50 @@ window.CONTENT = (function () {
   /* =========================================================
      LETTER 1 — THE REAL ONE  (password: the one on the card)
      ---------------------------------------------------------
-     >>> GRANT: THIS IS THE ONE HE READS. PUT YOUR OWN WORDS HERE. <<<
-     It's just HTML. <p> for paragraphs, <em> for italics,
-     <strong> for the gold highlighter, <hr> for a divider.
+     Grant's words, exactly as he wrote them. Only the typesetting is
+     mine: <strong> puts the gold highlighter under one line, <p class="sig">
+     sets the signature in the script face. Do not reword any of this.
      ========================================================= */
   var REAL_LETTER = [
-    '<h1>For Pa, at sixty‑eight</h1>',
-    '<p class="dateline">The card said the word. The word worked. Hello.</p>',
+    '<h1>68 Years Old, Pa</h1>',
+    '<hr class="title-rule">',
 
-    '<p>Dad —</p>',
+    '<p>This is an important year for you because of the little things I\'ve seen. And a ' +
+    'particularly nice chapter in your life, I feel.</p>',
 
-    '<p>I built a whole website so I could hide a piece of paper inside it. I want you to ' +
-    'appreciate how stupid that is, and I want you to appreciate that I did it anyway, because ' +
-    'that is exactly the kind of thing you taught me: <strong>if you\'re going to do something ' +
-    'ridiculous, do it all the way, and do it for somebody.</strong></p>',
+    '<p>I always look up to you and try to replicate or remember the things you\'ve shared and ' +
+    'the qualities you have, especially now as I find myself a young man at this point. Your love ' +
+    'of life, your happiness, your humor, your spontaneity, and carefreeness. Someone who I can ' +
+    'really say enjoys life in its moments. Those are some of the most important qualities I\'ve ' +
+    'learned along the way so far, especially from you.</p>',
 
-    '<p>Sixty‑eight. I keep turning that number over. It doesn\'t sound like you. You still take ' +
-    'the stairs like the elevator personally insulted you. You still tell a story with your ' +
-    'hands. You still walk into a room and somehow, within four minutes, know the guy\'s name, ' +
-    'where he\'s from, and whether his brother-in-law is any good at his job.</p>',
+    '<p>You know, of all the things I\'ve ever wanted in life, to me one of the most important ' +
+    'was <strong>to see you and the girls happy.</strong></p>',
 
-    '<p>Here is what I actually want to say, and I\'m going to say it plainly because you never ' +
-    'had much patience for the long way around.</p>',
+    '<p>When Mom left, it especially made this difficult. We haven\'t been without hardship, and ' +
+    'I haven\'t seen you with that same smile since. I\'ll never forget Mom, you know that. I ' +
+    'really still do think of her every day. It\'s kind of crazy to think. The other day, I had ' +
+    'to say it out loud that she was gone because eight years later, I still didn\'t believe it. ' +
+    'That\'s how much it means to me. I frequently remember and think of those moments we shared, ' +
+    'and even that moment in the bathroom with you when we confided in each other, knowing she ' +
+    'would be gone.</p>',
 
-    '<h2>Thank you</h2>',
+    '<p>For the last few years, you\'ve been with Iris, trying to live through the motions of ' +
+    'life, I think. And you can\'t blame yourself. We are all just trying to forget sometimes, ' +
+    'trying to keep moving. But it wasn\'t your destiny or where your heart lies. The moments ' +
+    'were okay, I think, and I saw that.</p>',
 
-    '<p>Thank you for never once making it about you. Not at my games, not at my worst years, ' +
-    'not on the phone calls where I clearly needed something and was too proud to ask. You just ' +
-    'showed up and stayed at the edge of the frame until I was ready.</p>',
+    '<p>So this takes me to what I saw recently on our trip to Palm Beach. Your true heart with ' +
+    'Barbara. Whether she will be the one is not up to me, but it makes me so happy that you\'re ' +
+    'finding that flame in your heart and feeling that again. It makes me so happy for you, Pop.</p>',
 
-    '<p>Thank you for the way you answer the phone when it\'s me. You say my name like it\'s good ' +
-    'news. Thirty‑some years of that. I don\'t think you know you do it.</p>',
+    '<p>I wish this feeling lasts infinitely for you. Shannah, Gabby, and I are so lucky to have ' +
+    'you, Pop.</p>',
 
-    '<p>Thank you for teaching me that being generous is a decision you make <em>before</em> you ' +
-    'know what it\'s going to cost. And that you don\'t announce it afterward.</p>',
+    '<p>Happy birthday. I love you.</p>',
 
-    '<p>Thank you for the stories. Even the ones that changed. <em>Especially</em> the ones that ' +
-    'changed. I know now that a story that stays exactly the same isn\'t being told, it\'s just ' +
-    'being recited — and you were never reciting. You were performing, for an audience of one ' +
-    'kid who thought his father had personally lived through every interesting thing that ever ' +
-    'happened in Brooklyn.</p>',
-
-    '<p>I still kind of think that.</p>',
-
-    '<hr>',
-
-    '<h2>What I know now that I didn\'t then</h2>',
-
-    '<p>When I was small I thought you were the strongest guy alive. Then there was a stretch — ' +
-    'you know the one — where I thought I had you figured out and you were just a man who worked ' +
-    'a lot and had opinions about parking. And now I\'m old enough to see what was actually ' +
-    'happening in those years, and honestly, Dad? The first version was closer.</p>',
-
-    '<p>You carried a lot quietly. You made it look like nothing. That\'s not nothing. That\'s ' +
-    'the whole thing.</p>',
-
-    '<p><strong>I got very, very lucky.</strong> People don\'t pick their fathers and I somehow ' +
-    'came out of the draft with you. I\'ve met a lot of people\'s dads by now. I\'d run it back ' +
-    'every time.</p>',
-
-    '<hr>',
-
-    '<h2>The plan for year sixty‑nine</h2>',
-
-    '<p>Less worrying. More of that laugh — the real one, the one that starts silent and then ' +
-    'has to sit down. More sun. More of you telling me the same story a fourth way. More ' +
-    'dinners where you try to grab the check and I let you win, because I\'ve learned that ' +
-    'letting you win <em>is</em> the present.</p>',
-
-    '<p>And at least one photograph of the two of us in white suits. Non‑negotiable. Scroll back ' +
-    'up, I built you a machine for exactly that.</p>',
-
-    '<p>Happy birthday, Pa. You\'re the best man I know and you\'re still the best dancer on the ' +
-    'floor. Everybody else is just occupying space out there.</p>',
-
-    '<p class="sig">— Grant</p>',
-
-    '<p class="ps"><em>P.S. — If one of my sisters is reading this over your shoulder: they got ' +
-    'a different letter. Ask them how the coffin story ends. Watch what happens.</em></p>'
+    '<p class="signoff">Your best friend,</p>',
+    '<p class="sig">Grant</p>'
   ].join('\n');
 
   /* =========================================================
